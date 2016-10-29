@@ -18,5 +18,15 @@ $api->version('v1', function ($api) {
 	$api->get('free', function() {
 		return \App\User::all();
 	});
+	//for mobile
+	$api->get('all-book', function() {
+		return \App\Book::all();
+	});
+	//$api->resource('books', 'App\Api\V1\Controllers\BookController');
+	$api->group(['middleware' => 'api.auth'], function ($api) {
+		$api->post('book/store', 'App\Api\V1\Controllers\BookController@store');
+		$api->get('book', 'App\Api\V1\Controllers\BookController@index');
+	});
 
+	
 });
